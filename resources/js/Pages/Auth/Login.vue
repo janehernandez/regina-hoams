@@ -1,6 +1,5 @@
 <script setup>
-import { reactive } from "vue";
-import { usePage, router, Link, useForm } from "@inertiajs/vue3";
+import { usePage, Link, useForm } from "@inertiajs/vue3";
 import { SpringSpinner } from "epic-spinners";
 import Header from "../../Components/Header.vue";
 import Footer from "../../Components/Footer.vue";
@@ -12,10 +11,6 @@ const form = useForm({
     password: null,
     _token: usePage().props.csrf_token,
 });
-
-const submit = () => {
-    router.post("/login", form);
-};
 </script>
 
 <template>

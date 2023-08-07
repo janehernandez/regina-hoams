@@ -1,7 +1,7 @@
 <script setup>
-import { usePage, router, Link, useForm } from "@inertiajs/vue3";
+import { useForm } from "@inertiajs/vue3";
 import { pickBy } from "lodash";
-import { ref, watch, toRefs } from "vue";
+import { watch, toRefs } from "vue";
 import Modal from "../Modal.vue";
 import Input from "../Input.vue";
 import ButtonPrimary from "../ButtonPrimary.vue";
@@ -20,8 +20,10 @@ const form = useForm({
 watch(
     () => props.announcement,
     (announcement) => {
-        form.title = announcement.title;
-        form.content = announcement.content;
+        if (announcement) {
+            form.title = announcement.title || "";
+            form.content = announcement.content || "";
+        }
     },
     { deep: true }
 );

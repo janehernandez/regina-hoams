@@ -1,15 +1,13 @@
 <script setup>
 import { toRefs, computed, ref } from "vue";
-import { Link } from "@inertiajs/vue3";
 import dayjs from "dayjs";
 
 import Header from "../../../Components/Header.vue";
 import Footer from "../../../Components/Footer.vue";
 import ButtonPrimary from "../../../Components/ButtonPrimary.vue";
+import Pagination from "../../../Components/Pagination.vue";
 import Table from "../../../Components/Table.vue";
-import Modal from "../../../Components/Modal.vue";
 
-import Input from "../../../Components/Input.vue";
 import EditAnnouncement from "../../../Components/Modals/EditAnnouncement.vue";
 
 const props = defineProps({ announcements: Object });
@@ -90,7 +88,8 @@ const columns = [
                         </template>
                     </Table>
 
-                    <div class="general-pagination">
+                    <Pagination :links="announcements.links" />
+                    <!-- <div class="general-pagination">
                         <ul class="justify-content-center align-items-center">
                             <li
                                 v-for="(link, index) in announcements.links"
@@ -117,7 +116,8 @@ const columns = [
                                 />
                             </li>
                         </ul>
-                    </div>
+                    </div> -->
+
                     <div
                         class="text-center text-sm-start mt-4 pt-2 d-flex align-items-center justify-content-center"
                     >

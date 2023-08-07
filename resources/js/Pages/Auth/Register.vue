@@ -1,6 +1,5 @@
 <script setup>
-import { reactive } from "vue";
-import { usePage, router, useForm } from "@inertiajs/vue3";
+import { useForm } from "@inertiajs/vue3";
 import { SpringSpinner } from "epic-spinners";
 import Header from "../../Components/Header.vue";
 import Footer from "../../Components/Footer.vue";
@@ -21,10 +20,6 @@ const form = useForm({
     block: "",
     lot: "",
 });
-
-const submit = () => {
-    router.post("/login", form);
-};
 
 const blkNum = Array.from({ length: 50 }, (_, index) => ({
     label: `Blk ${(index + 1).toString()}`,
