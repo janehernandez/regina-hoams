@@ -3,7 +3,10 @@
 use App\Http\Controllers\Admin\AdminListController;
 use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\Auth\LoginController as AuthLoginController;
+use App\Http\Controllers\Admin\ChangeMemberStatusController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\HomeownerController;
+use App\Http\Controllers\Admin\OfficerController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\FormController;
@@ -45,9 +48,13 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 Route::prefix('admin')->name('admin.')->middleware('auth', Admin::class)->group(function () {
+    Route::resource('announcements', AnnouncementController::class);
+    Route::resource('officers', OfficerController::class);
+    Route::get('homeowners', HomeownerController::class)->name('homeowners');
+    Route::put('/{user}/update-cod', ChangeMemberStatusController::class)->name('homeowners.update.member.status');
+
     Route::get('dashboard', DashboardController::class)->name('dashboard');
     Route::get('admins', AdminListController::class)->name('admins');
-    Route::resource('announcements', AnnouncementController::class);
 });
 
 Route::post('logout', [LoginController::class, 'destroy'])->middleware('auth')->name('logout');

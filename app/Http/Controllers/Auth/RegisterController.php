@@ -28,8 +28,12 @@ class RegisterController extends Controller
         ]);
 
         $address = "Blk {$request->blk} Lot {$request->lot} Reginaville2000 Brgy. Inocencio, Trece Martires City Cavite";
+        $memberNo = 'RGV-' . sprintf('%05d', $user->id);
 
         $memberInfo = [
+            'id_number' => $memberNo,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'gender' => $request->gender,
             'phone_number' => $request->phone_number,
             'mobile_number' => $request->mobile_number,

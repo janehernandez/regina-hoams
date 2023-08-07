@@ -73,11 +73,18 @@ class LoginRequest extends FormRequest
         }
 
 
-        if (optional($user->memberInfo)->status !== 1) {
+        if (optional($user->memberInfo)->status === 2) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
                 'email' => 'You cannot login for the meantime because your registration is subject for approval',
+            ]);
+        }
+        if (optional($user->memberInfo)->status === 0) {
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'email' => 'Your account is inactive',
             ]);
         }
     }

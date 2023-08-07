@@ -113,10 +113,23 @@ const adminHeaderLabel = () => {
                 <ul v-else>
                     <li>
                         <Link
-                            href="/"
                             :class="{ active: isActive('announcement') }"
-                            :href="route('admin.announcement')"
+                            :href="route('admin.announcements.index')"
                             >Announcements</Link
+                        >
+                    </li>
+                    <li>
+                        <Link
+                            :class="{ active: isActive('homeowners') }"
+                            :href="route('admin.homeowners')"
+                            >Homeowners</Link
+                        >
+                    </li>
+                    <li>
+                        <Link
+                            :class="{ active: isActive('officers') }"
+                            :href="route('admin.officers.index')"
+                            >Officers</Link
                         >
                     </li>
                     <li>

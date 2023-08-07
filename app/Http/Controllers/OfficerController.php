@@ -2,21 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Announcement;
 use App\Models\Officer;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
+use App\Http\Requests\StoreOfficerRequest;
+use App\Http\Requests\UpdateOfficerRequest;
 
-class HomeController extends Controller
+class OfficerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $announcements = Announcement::orderByDesc('created_at')->paginate(2);
-        $officers = Officer::orderBy('name')->get();
-        return Inertia::render('Index', compact('announcements', 'officers'));
+        //
     }
 
     /**
@@ -30,7 +27,7 @@ class HomeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreOfficerRequest $request)
     {
         //
     }
@@ -38,7 +35,7 @@ class HomeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Officer $officer)
     {
         //
     }
@@ -46,7 +43,7 @@ class HomeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Officer $officer)
     {
         //
     }
@@ -54,7 +51,7 @@ class HomeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateOfficerRequest $request, Officer $officer)
     {
         //
     }
@@ -62,7 +59,7 @@ class HomeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Officer $officer)
     {
         //
     }
