@@ -34,7 +34,8 @@ class AnnouncementController extends Controller
      */
     public function store(StoreAnnouncementRequest $request)
     {
-        //
+        Announcement::create($request->validated());
+        return back()->with('message', 'success|New Announcement has been created.');
     }
 
     /**

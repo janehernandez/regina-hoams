@@ -1,7 +1,7 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3";
+import { ref, onMounted } from "vue";
 import { pickBy } from "lodash";
-import { watch, toRefs } from "vue";
 import { SpringSpinner } from "epic-spinners";
 import { useToast } from "vue-toastification";
 
@@ -11,39 +11,36 @@ import ButtonPrimary from "../ButtonPrimary.vue";
 
 const emit = defineEmits(["close"]);
 
-const props = defineProps({ announcement: Object });
-const { announcement } = toRefs(props);
-
 const form = useForm({
     title: null,
     content: null,
-    _method: "PUT",
+    _method: "POST",
 });
 
-watch(
-    () => props.announcement,
-    (announcement) => {
-        if (announcement) {
-            form.title = announcement.title || "";
-            form.content = announcement.content || "";
-        }
-    },
-    { deep: true }
-);
-
+const newAnnouncementModal = ref(null);
 const toast = useToast();
 const submit = () => {
     form.transform((data) => pickBy(data)).post(
-        route("admin.announcements.update", announcement.value.id),
+        route("admin.announcements.store"),
         {
             onSuccess: () => {
-                const cancelButton = document.getElementById("cancelButton");
-                toast.success("Announcement Updated Successfully");
-                cancelButton.click();
+                toast.success("Announcement Created Successfully");
+                const closeButton = document.querySelector("#closeButton");
+                if (closeButton) {
+                    closeButton.click();
+                }
             },
         }
     );
 };
+
+onMounted(() => {
+    newAnnouncementModal.value.$el.addEventListener("hidden.bs.modal", () =>
+        emit("close")
+    );
+
+    console.log(newAnnouncementModal.value.$el);
+});
 
 const closeModal = () => {
     form.reset();
@@ -52,7 +49,11 @@ const closeModal = () => {
 </script>
 
 <template>
-    <Modal id="editAnnouncementModal" title="Edit Announcement">
+    <Modal
+        id="newAnnouncementModal"
+        ref="newAnnouncementModal"
+        title="Post New Announcement"
+    >
         <template #body>
             <form class="needs-validation" novalidate>
                 <div class="form-outline mb-4">
@@ -99,8 +100,8 @@ const closeModal = () => {
                 <span v-else>Post</span>
             </ButtonPrimary>
             <button
-                ref="cancelButton"
-                id="cancelButton"
+                ref="closeButton"
+                id="closeButton"
                 type="button"
                 class="cancel btn btn-secondary"
                 data-bs-dismiss="modal"

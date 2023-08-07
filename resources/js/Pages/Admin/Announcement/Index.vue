@@ -2,6 +2,7 @@
 import { toRefs, computed, ref } from "vue";
 import dayjs from "dayjs";
 
+import { Link } from "@inertiajs/vue3";
 import Header from "../../../Components/Header.vue";
 import Footer from "../../../Components/Footer.vue";
 import ButtonPrimary from "../../../Components/ButtonPrimary.vue";
@@ -9,11 +10,15 @@ import Pagination from "../../../Components/Pagination.vue";
 import Table from "../../../Components/Table.vue";
 
 import EditAnnouncement from "../../../Components/Modals/EditAnnouncement.vue";
+import CreateAnnouncement from "../../../Components/Modals/CreateAnnouncement.vue";
+import DeleteResource from "../../../Components/Modals/DeleteResource.vue";
 
 const props = defineProps({ announcements: Object });
 const { announcements } = toRefs(props);
 
 const announcement = ref(null);
+const announcementId = ref("");
+
 const formatPostedDate = (value) => {
     if (value) {
         return dayjs(value).format("MM/DD/YYYY h:mm A");
@@ -76,12 +81,7 @@ const columns = [
                                     class="me-3"
                                     data-bs-toggle="modal"
                                     href="#deletemodal"
-                                    @click="
-                                        $emit(
-                                            'removeSubCategory',
-                                            resource.hashId
-                                        )
-                                    "
+                                    @click="announcementId = resource.id"
                                     ><i class="bi bi-trash" />
                                 </a>
                             </div>
@@ -89,39 +89,15 @@ const columns = [
                     </Table>
 
                     <Pagination :links="announcements.links" />
-                    <!-- <div class="general-pagination">
-                        <ul class="justify-content-center align-items-center">
-                            <li
-                                v-for="(link, index) in announcements.links"
-                                class="page-item"
-                                :class="{
-                                    'd-none d-sm-block':
-                                        index != 0 ||
-                                        index != announcements.links.length - 1,
-                                    active: link.active,
-                                }"
-                                :key="`link-${index}`"
-                            >
-                                <Link
-                                    v-if="link.url"
-                                    :href="link.url"
-                                    class="page-link"
-                                    ><span v-html="link.label"
-                                /></Link>
-                                <span
-                                    v-else
-                                    class="page-link"
-                                    style="cursor: pointer"
-                                    v-html="link.label"
-                                />
-                            </li>
-                        </ul>
-                    </div> -->
-
                     <div
                         class="text-center text-sm-start mt-4 pt-2 d-flex align-items-center justify-content-center"
                     >
-                        <ButtonPrimary>Post New Announcement</ButtonPrimary>
+                        <Link
+                            class="btn btn-primary"
+                            data-bs-toggle="modal"
+                            href="#newAnnouncementModal"
+                            >Post New Announcement</Link
+                        >
                     </div>
                 </div>
             </div>
@@ -133,6 +109,16 @@ const columns = [
         id="editAnnouncementModal"
         :announcement="announcement"
         @close="announcement = null"
+    />
+
+    <CreateAnnouncement id="newAnnouncementModal" />
+
+    <DeleteResource
+        :resource-id="announcementId"
+        confirmation-text="Delete this announcement?"
+        message="Removing this cannot be undone."
+        action="admin.announcements.destroy"
+        @close="announcementId = ''"
     />
 
     <Footer :show-top-details="false" />

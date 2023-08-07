@@ -1,6 +1,5 @@
 <script setup>
 import { toRefs } from "vue";
-import { Link } from "@inertiajs/vue3";
 
 const props = defineProps({ showTopDetails: Boolean });
 const { showTopDetails } = toRefs(props);

@@ -3,6 +3,8 @@ import "../css/app.css";
 
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 createInertiaApp({
     resolve: (name) => {
@@ -11,6 +13,11 @@ createInertiaApp({
     },
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
+            .use(Toast, {
+                toastClassName: "custom",
+                hideProgressBar: true,
+                timeout: 2000,
+            })
             .use(plugin)
             .mixin({ methods: { route: window.route } })
             .mount(el);
