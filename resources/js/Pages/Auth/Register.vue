@@ -189,7 +189,7 @@ const civilStatus = [
                                                 for="birthdate"
                                                 >Birthday:</label
                                             >
-                                            <input
+                                            <Input
                                                 v-model="form.birthdate"
                                                 id="birthdate"
                                                 type="date"

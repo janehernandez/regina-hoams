@@ -16,6 +16,7 @@
         "dayjs": "^1.11.9",
         "epic-spinners": "^2.0.0",
         "lodash": "^4.17.21",
+        "qalendar": "^3.5.0",
         "vue": "^3.2.36",
         "vue-toastification": "^2.0.0-rc.5"
     }
