@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\AdminListController;
 use App\Http\Controllers\Admin\AnnouncementController;
+use App\Http\Controllers\Admin\AppointmentController;
+use App\Http\Controllers\Admin\ApproveAppointmentController;
 use App\Http\Controllers\Admin\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\Admin\ChangeMemberStatusController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -9,6 +11,7 @@ use App\Http\Controllers\Admin\HomeownerController;
 use App\Http\Controllers\Admin\OfficerController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\HomeController;
 use App\Http\Middleware\Admin;
@@ -31,6 +34,7 @@ Route::match(['POST', 'GET'], '/admin/', function () {
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::resource('calendar', CalendarController::class)->only(['index', 'store']);
 
 Route::group(['middleware' => 'guest'], function () {
     Route::prefix('admin')->name('admin.')->group(function () {
@@ -50,6 +54,8 @@ Route::group(['middleware' => 'guest'], function () {
 Route::prefix('admin')->name('admin.')->middleware('auth', Admin::class)->group(function () {
     Route::resource('announcements', AnnouncementController::class);
     Route::resource('officers', OfficerController::class);
+    Route::resource('appointments', AppointmentController::class);
+    Route::put('/{user}/approve-appointment', ApproveAppointmentController::class)->name('appointments.approve');
     Route::get('homeowners', HomeownerController::class)->name('homeowners');
     Route::put('/{user}/update-cod', ChangeMemberStatusController::class)->name('homeowners.update.member.status');
 

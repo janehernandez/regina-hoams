@@ -90,7 +90,9 @@ const adminHeaderLabel = () => {
                         >
                     </li>
                     <li>
-                        <Link href="/" :class="{ active: isActive('calendar') }"
+                        <Link
+                            href="/calendar"
+                            :class="{ active: isActive('calendar') }"
                             >Calendar</Link
                         >
                     </li>
@@ -116,6 +118,13 @@ const adminHeaderLabel = () => {
                             :class="{ active: isActive('announcement') }"
                             :href="route('admin.announcements.index')"
                             >Announcements</Link
+                        >
+                    </li>
+                    <li>
+                        <Link
+                            :class="{ active: isActive('appointment') }"
+                            :href="route('admin.appointments.index')"
+                            >Appointments</Link
                         >
                     </li>
                     <li>
