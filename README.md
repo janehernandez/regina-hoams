@@ -67,8 +67,27 @@ information electronically.
     ```bash
     php artisan migrate --seed
     ```
+
 8. Generate a JWT secret key:
 
     ```bash
     php artisan jwt:secret
+    ```
+
+9. Install frontend packages
+
+    ```bash
+    npm install
+    ```
+
+10. start development server by running:
+
+    ```bash
+    npm run dev
+    ```
+
+11. Access the site on the browser
+
+    ```bash
+    e.g http://regina-hoams.test
     ```
