@@ -72,7 +72,12 @@ const adminHeaderLabel = () => {
         >
             <div class="logo">
                 <h1 class="text-light">
-                    <Link :href="route('home')"
+                    <Link
+                        :href="
+                            !isAdmin
+                                ? route('home')
+                                : route('admin.announcements.index')
+                        "
                         ><span>{{ adminHeaderLabel() }} </span></Link
                     >
                 </h1>
